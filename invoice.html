@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Management System</title>
+
+    <link rel="stylesheet" href="invoice.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Invoice Management System</h1>
+
+    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+
+    <br><br>
+
+    <input
+        type="text"
+        id="search"
+        placeholder="🔍 Search Invoice..."
+        onkeyup="searchInvoice()">
+
+    <br><br>
+
+    <form onsubmit="saveInvoice(event)">
+
+        <label>Invoice Number</label>
+        <input
+            type="text"
+            id="invoiceNo"
+            placeholder="INV001"
+            required>
+
+        <label>Customer Name</label>
+        <input
+            type="text"
+            id="customerName"
+            placeholder="Enter Customer Name"
+            required>
+
+        <label>Product Name</label>
+        <input
+            type="text"
+            id="productName"
+            placeholder="Enter Product Name"
+            required>
+
+        <label>Quantity</label>
+        <input
+            type="number"
+            id="quantity"
+            placeholder="Enter Quantity"
+            onkeyup="calculateTotal()"
+            required>
+
+        <label>Price</label>
+        <input
+            type="number"
+            id="price"
+            placeholder="Enter Price"
+            onkeyup="calculateTotal()"
+            required>
+
+        <label>Total Amount</label>
+        <input
+            type="text"
+            id="total"
+            readonly>
+
+        <br>
+
+        <button type="submit">
+            Save Invoice
+        </button>
+
+        <button
+            type="button"
+            onclick="downloadPDF()">
+            Download PDF
+        </button>
+
+        <button
+            type="button"
+            onclick="printInvoice()">
+            Print Invoice
+        </button>
+
+    </form>
+
+    <br><br>
+
+    <h2>Invoice List</h2>
+
+    <table
+        border="1"
+        width="100%"
+        id="invoiceTable">
+
+        <tr>
+            <th>Invoice No</th>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+
+    </table>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="invoice.js"></script>
+
+</body>
+</html>
