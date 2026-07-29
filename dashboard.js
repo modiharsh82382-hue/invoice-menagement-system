@@ -24,3 +24,14 @@ document.getElementById("totalSales").innerHTML = "₹" + totalSales;
 
 // Total Products (Temporary)
 document.getElementById("totalProducts").innerHTML = "150";
+function logout() {
+
+    let confirmLogout = confirm("Are you sure you want to logout?");
+
+    if (confirmLogout) {
+
+        window.location.href = "login.html";
+
+    }
+
+}

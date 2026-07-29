@@ -14,6 +14,8 @@ window.onload = function () {
 
     displayInvoices();
 
+    generateInvoiceNumber();
+
 };
 
 // -------------------------
@@ -32,7 +34,14 @@ function calculateTotal() {
     document.getElementById("total").value = qty * price;
 
 }
+function generateInvoiceNumber() {
 
+    let nextNumber = invoices.length + 1;
+
+    document.getElementById("invoiceNo").value =
+        "INV" + String(nextNumber).padStart(3, "0");
+
+}
 // -------------------------
 // Save Invoice
 // -------------------------
@@ -66,13 +75,16 @@ function saveInvoice(event) {
     console.log(invoice);
 
     displayInvoices();
-    editIndex = -1;
 
-    document.querySelector("form").reset();
+document.querySelector("form").reset();
 
-    document.getElementById("total").value = "";
+document.getElementById("total").value = "";
 
-    alert("Invoice Saved Successfully!");
+editIndex = -1;
+
+generateInvoiceNumber();
+
+alert("Invoice Saved Successfully!");
 
 }
 // =============================
@@ -130,6 +142,7 @@ function editRow(index) {
     document.getElementById("total").value = invoices[index].total;
 
     editIndex = index;
+    
 
 }
 
