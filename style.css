@@ -1,59 +1,102 @@
-body{
+*{
     margin:0;
     padding:0;
-    font-family:Arial, sans-serif;
-    background:#f2f2f2;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
-.container{
+body{
     display:flex;
     justify-content:center;
     align-items:center;
     height:100vh;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+}
+
+.container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .login-box{
-    width:350px;
-    background:#ffffff;
-    padding:35px;
-    border-radius:10px;
-    box-shadow:0px 0px 15px rgba(0,0,0,0.2);
+    width:380px;
+    padding:40px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(15px);
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
     text-align:center;
+    color:white;
+    animation:fadeIn 0.8s ease;
+}
+
+.logo{
+    font-size:60px;
+    color:#00d4ff;
+    margin-bottom:15px;
 }
 
 .login-box h1{
+    font-size:30px;
     margin-bottom:10px;
-    color:#333;
-    font-size:28px;
 }
 
 .login-box p{
+    color:#ddd;
     margin-bottom:25px;
-    color:gray;
 }
 
-input{
+.input-box{
+    position:relative;
+    margin-bottom:20px;
+}
+
+.input-box i{
+    position:absolute;
+    left:15px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#666;
+}
+
+.input-box input{
     width:100%;
-    padding:12px;
-    margin-bottom:20px;   /* Username અને Password પછી Space */
-    border:1px solid #ccc;
-    border-radius:5px;
+    padding:14px 14px 14px 45px;
+    border:none;
+    border-radius:10px;
+    outline:none;
     font-size:16px;
-    box-sizing:border-box;
 }
 
 button{
     width:100%;
-    padding:12px;
-    margin-top:10px;      /* Password અને Login Button વચ્ચે Space */
-    background:#007BFF;
-    color:white;
+    padding:14px;
     border:none;
-    border-radius:5px;
-    font-size:16px;
+    border-radius:10px;
+    background:#00c6ff;
+    color:white;
+    font-size:17px;
     cursor:pointer;
+    transition:0.3s;
 }
 
 button:hover{
-    background:#0056b3;
+    background:#0072ff;
+    transform:translateY(-2px);
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
 }
