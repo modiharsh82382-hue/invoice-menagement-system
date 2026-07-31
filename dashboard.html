@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+<div class="sidebar">
+
+    <h2>IMS</h2>
+
+    <a href="#">🏠 Dashboard</a>
+    <a href="#">👤 Customer</a>
+    <a href="#">📦 Product</a>
+    <a href="invoice.html">🧾 Invoice</a>
+    <a href="#" onclick="logout()">🚪 Logout</a>
+
+</div>
+
+<div class="main">
+
+    <div class="header">
+
+    <h1>Dashboard</h1>
+
+    <div class="admin">
+        Welcome, Admin 👋
+    </div>
+
+</div>
+
+    <div class="cards">
+
+    <div class="card product">
+        <h2 id="totalProducts">150</h2>
+        <p>Total Products</p>
+    </div>
+
+    <div class="card customer">
+        <h2 id="totalCustomers">0</h2>
+        <p>Total Customers</p>
+    </div>
+
+    <div class="card invoice">
+        <h2 id="totalInvoices">0</h2>
+        <p>Total Invoices</p>
+    </div>
+
+    <div class="card sales">
+        <h2 id="totalSales">₹0</h2>
+        <p>Total Sales</p>
+    </div>
+
+</div>
+
+</div>
+<script src="dashboard.js"></script>
+</body>
+</html>
