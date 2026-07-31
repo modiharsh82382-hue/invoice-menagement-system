@@ -1,83 +1,146 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Customer</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
 
-<h1>Edit Customer</h1>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">Invoice Management System</a>
 
-<form action="/customers/{{ $customer->id }}" method="POST">
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="/">Dashboard</a>
+            <a class="nav-link active" href="/customers">Customers</a>
+            <a class="nav-link" href="#">Products</a>
+            <a class="nav-link" href="#">Invoices</a>
+        </div>
+    </div>
+</nav>
 
-    @csrf
-    @method('PUT')
+<div class="container mt-5">
 
-    <!-- Customer Name -->
-    <label>Customer Name</label><br>
-    <input type="text"
-           name="customer_name"
-           value="{{ old('customer_name', $customer->customer_name) }}">
-    <br>
-    @error('customer_name')
-        <span style="color:red;">{{ $message }}</span>
-    @enderror
-    <br><br>
+    <div class="card shadow">
 
-    <!-- Email -->
-    <label>Email</label><br>
-    <input type="email"
-           name="email"
-           value="{{ old('email', $customer->email) }}">
-    <br>
-    @error('email')
-        <span style="color:red;">{{ $message }}</span>
-    @enderror
-    <br><br>
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Edit Customer</h2>
+        </div>
 
-    <!-- Phone -->
-    <label>Phone</label><br>
-    <input type="tel"
-           name="phone"
-           value="{{ old('phone', $customer->phone) }}"
-           maxlength="10"
-           pattern="[0-9]{10}"
-           title="Enter exactly 10 digits"
-           required>
-    <br>
-    @error('phone')
-        <span style="color:red;">{{ $message }}</span>
-    @enderror
-    <br><br>
+        <div class="card-body">
 
-    <!-- Address -->
-    <label>Address</label><br>
-    <textarea name="address">{{ old('address', $customer->address) }}</textarea>
-    <br>
-    @error('address')
-        <span style="color:red;">{{ $message }}</span>
-    @enderror
-    <br><br>
+            <form action="/customers/{{ $customer->id }}" method="POST">
 
-    <!-- GST Number -->
-    <label>GST Number</label><br>
-    <input type="text"
-           name="gst_number"
-           value="{{ old('gst_number', $customer->gst_number) }}"
-           maxlength="15"
-           style="text-transform:uppercase;">
-    <br>
-    @error('gst_number')
-        <span style="color:red;">{{ $message }}</span>
-    @enderror
-    <br><br>
+                @csrf
+                @method('PUT')
 
-    <button type="submit">Update Customer</button>
+                <div class="mb-3">
+                    <label class="form-label">Customer Name</label>
+                    <input
+                        type="text"
+                        name="customer_name"
+                        class="form-control @error('customer_name') is-invalid @enderror"
+                        value="{{ old('customer_name', $customer->customer_name) }}"
+                    >
 
-    <a href="/customers">
-        <button type="button">Cancel</button>
-    </a>
+                    @error('customer_name')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
-</form>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control @error('email') is-invalid @enderror"
+                        value="{{ old('email', $customer->email) }}"
+                    >
+
+                    @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input
+                        type="text"
+                        name="phone"
+                        maxlength="10"
+                        class="form-control @error('phone') is-invalid @enderror"
+                        value="{{ old('phone', $customer->phone) }}"
+                    >
+
+                    @error('phone')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+
+                    <textarea
+                        name="address"
+                        rows="4"
+                        class="form-control @error('address') is-invalid @enderror"
+                    >{{ old('address', $customer->address) }}</textarea>
+
+                    @error('address')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">GST Number</label>
+
+                    <input
+                        type="text"
+                        name="gst_number"
+                        maxlength="15"
+                        class="form-control @error('gst_number') is-invalid @enderror"
+                        value="{{ old('gst_number', $customer->gst_number) }}"
+                    >
+
+                    @error('gst_number')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                <button class="btn btn-warning">
+                    Update Customer
+                </button>
+
+                <a href="/customers" class="btn btn-secondary">
+                    Back
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer class="text-center mt-5 mb-3 text-muted">
+    © 2026 Invoice Management System
+</footer>
 
 </body>
 </html>
