@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Product</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">
+        Delete Product
+    </h2>
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-danger">
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Product Name</th>
+
+                <th>Category</th>
+
+                <th>Price</th>
+
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td>1</td>
+
+                <td>Laptop</td>
+
+                <td>Electronics</td>
+
+                <td>₹50000</td>
+
+                <td>
+
+                    <button
+                    class="btn btn-danger"
+                    onclick="deleteProduct()">
+
+                        Delete
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>2</td>
+
+                <td>Shirt</td>
+
+                <td>Clothes</td>
+
+                <td>₹800</td>
+
+                <td>
+
+                    <button
+                    class="btn btn-danger"
+                    onclick="deleteProduct()">
+
+                        Delete
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <a href="dashboard.html" class="btn btn-secondary">
+
+        Back To Dashboard
+
+    </a>
+
+</div>
+
+<script>
+
+function deleteProduct(){
+
+    let result = confirm("Are you sure you want to delete this product?");
+
+    if(result){
+
+        alert("Product Deleted Successfully");
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

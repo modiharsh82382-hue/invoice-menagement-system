@@ -1,102 +1,58 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+/* General */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-body{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+/* Login Box */
+.login-container {
+    width: 350px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
-.container{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+/* Heading */
+.login-container h1 {
+    text-align: center;
+    color: #0d6efd;
+    margin-bottom: 25px;
 }
 
-.login-box{
-    width:380px;
-    padding:40px;
-    border-radius:20px;
-    background:rgba(255,255,255,0.12);
-    backdrop-filter:blur(15px);
-    box-shadow:0 10px 30px rgba(0,0,0,0.4);
-    text-align:center;
-    color:white;
-    animation:fadeIn 0.8s ease;
+/* Labels */
+label {
+    font-weight: bold;
 }
 
-.logo{
-    font-size:60px;
-    color:#00d4ff;
-    margin-bottom:15px;
+/* Input */
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
-.login-box h1{
-    font-size:30px;
-    margin-bottom:10px;
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-.login-box p{
-    color:#ddd;
-    margin-bottom:25px;
-}
-
-.input-box{
-    position:relative;
-    margin-bottom:20px;
-}
-
-.input-box i{
-    position:absolute;
-    left:15px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#666;
-}
-
-.input-box input{
-    width:100%;
-    padding:14px 14px 14px 45px;
-    border:none;
-    border-radius:10px;
-    outline:none;
-    font-size:16px;
-}
-
-button{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    background:#00c6ff;
-    color:white;
-    font-size:17px;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-button:hover{
-    background:#0072ff;
-    transform:translateY(-2px);
-}
-
-@keyframes fadeIn{
-
-    from{
-        opacity:0;
-        transform:translateY(-20px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-
+button:hover {
+    background: #084298;
 }

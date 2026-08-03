@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Product</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">
+        Search Product
+    </h2>
+
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <input
+            type="text"
+            id="searchInput"
+            class="form-control"
+            placeholder="Enter Product Name">
+
+        </div>
+
+        <div class="col-md-4">
+
+            <button
+            class="btn btn-primary w-100"
+            onclick="searchProduct()">
+
+                Search
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Product Name</th>
+
+                <th>Category</th>
+
+                <th>Price</th>
+
+                <th>Status</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="productTable">
+
+            <tr>
+
+                <td>1</td>
+
+                <td>Laptop</td>
+
+                <td>Electronics</td>
+
+                <td>₹50000</td>
+
+                <td>Available</td>
+
+            </tr>
+
+            <tr>
+
+                <td>2</td>
+
+                <td>Shirt</td>
+
+                <td>Clothes</td>
+
+                <td>₹800</td>
+
+                <td>Out Of Stock</td>
+
+            </tr>
+
+            <tr>
+
+                <td>3</td>
+
+                <td>Mobile</td>
+
+                <td>Electronics</td>
+
+                <td>₹25000</td>
+
+                <td>Available</td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <a href="dashboard.html" class="btn btn-secondary">
+
+        Back To Dashboard
+
+    </a>
+
+</div>
+
+<script>
+
+function searchProduct(){
+
+    let input = document.getElementById("searchInput").value.toUpperCase();
+
+    let table = document.getElementById("productTable");
+
+    let tr = table.getElementsByTagName("tr");
+
+    for(let i=0;i<tr.length;i++){
+
+        let td = tr[i].getElementsByTagName("td")[1];
+
+        if(td){
+
+            let txt = td.textContent || td.innerText;
+
+            if(txt.toUpperCase().indexOf(input)>-1){
+
+                tr[i].style.display="";
+
+            }
+            else{
+
+                tr[i].style.display="none";
+
+            }
+
+        }
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

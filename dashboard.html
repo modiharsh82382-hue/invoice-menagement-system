@@ -1,63 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
 
-    <link rel="stylesheet" href="dashboard.css">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Invoice Management System</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
+
 <body>
 
-<div class="sidebar">
+<div class="container mt-5">
 
-    <h2>IMS</h2>
+<h1 class="text-center">
 
-    <a href="#">🏠 Dashboard</a>
-    <a href="#">👤 Customer</a>
-    <a href="#">📦 Product</a>
-    <a href="invoice.html">🧾 Invoice</a>
-    <a href="#" onclick="logout()">🚪 Logout</a>
+Invoice Management System
 
-</div>
+</h1>
 
-<div class="main">
+<hr>
 
-    <div class="header">
+<h3 class="text-center">
 
-    <h1>Dashboard</h1>
+Product Module
 
-    <div class="admin">
-        Welcome, Admin 👋
-    </div>
+</h3>
 
-</div>
+<div class="text-center mt-4">
 
-    <div class="cards">
+<a href="add-product.html" class="btn btn-primary m-2">
+Add Product
+</a>
 
-    <div class="card product">
-        <h2 id="totalProducts">150</h2>
-        <p>Total Products</p>
-    </div>
+<a href="view-product.html" class="btn btn-success m-2">
+View Product
+</a>
 
-    <div class="card customer">
-        <h2 id="totalCustomers">0</h2>
-        <p>Total Customers</p>
-    </div>
+<a href="update-product.html" class="btn btn-warning m-2">
+Update Product
+</a>
 
-    <div class="card invoice">
-        <h2 id="totalInvoices">0</h2>
-        <p>Total Invoices</p>
-    </div>
+<a href="delete-product.html" class="btn btn-danger m-2">
+Delete Product
+</a>
 
-    <div class="card sales">
-        <h2 id="totalSales">₹0</h2>
-        <p>Total Sales</p>
-    </div>
+<a href="search-product.html" class="btn btn-info m-2">
+Search Product
+</a>
 
 </div>
 
 </div>
-<script src="dashboard.js"></script>
+
 </body>
+
 </html>

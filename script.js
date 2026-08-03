@@ -1,29 +1,33 @@
-function login(event){
+// Save Product
+
+function saveProduct(event){
 
     event.preventDefault();
 
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
+    let product = {
 
-    let button = document.querySelector("button");
+        name: document.getElementById("productName").value,
 
-    if(username==="admin" && password==="admin"){
+        category: document.getElementById("category").value,
 
-        button.innerHTML = "Logging in...";
-        button.disabled = true;
+        price: document.getElementById("price").value,
 
-        setTimeout(function(){
+        quantity: document.getElementById("quantity").value,
 
-            alert("Login Successful ✅");
+        description: document.getElementById("description").value,
 
-            window.location.href = "dashboard.html";
+        status: document.getElementById("status").value
 
-        },1000);
+    };
 
-    }else{
+    let products = JSON.parse(localStorage.getItem("products")) || [];
 
-        alert("❌ Invalid Username or Password");
+    products.push(product);
 
-    }
+    localStorage.setItem("products", JSON.stringify(products));
+
+    alert("Product Added Successfully");
+
+    window.location.href="view-product.html";
 
 }
