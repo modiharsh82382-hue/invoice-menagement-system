@@ -1,170 +1,225 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice Management</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-light">
 
-<div class="container mt-5">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="{{ route('invoices.index') }}">
+            Invoice Management System
+        </a>
+
+        <div>
+            <a href="/" class="btn btn-light btn-sm">Dashboard</a>
+            <a href="/customers" class="btn btn-light btn-sm">Customers</a>
+            <a href="/products" class="btn btn-light btn-sm">Products</a>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    @if(session('success'))
+
+        <div class="alert alert-success" id="success-alert">
+
+            {{ session('success') }}
+
+        </div>
+
+        <script>
+            setTimeout(function () {
+                let alert = document.getElementById('success-alert');
+                if (alert) {
+                    alert.style.display = 'none';
+                }
+            }, 3000);
+        </script>
+
+    @endif
 
     <div class="card shadow">
 
-        <div class="card-header bg-primary text-white">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
 
-            <h3>Invoice List</h3>
+            <h4 class="mb-0">Invoice List</h4>
+
+            <span class="badge bg-light text-dark fs-6">
+                Total : {{ count($invoices) }}
+            </span>
 
         </div>
 
         <div class="card-body">
 
-            @if(session('success'))
+            <div class="row mb-3">
 
-                <div class="alert alert-success">
+                <div class="col-md-6">
 
-                    {{ session('success') }}
+                    <a href="{{ route('invoices.create') }}" class="btn btn-success">
+
+                        + Add Invoice
+
+                    </a>
 
                 </div>
 
-            @endif
+                <div class="col-md-6">
 
-            <div class="d-flex justify-content-between mb-3">
+                    <form action="{{ route('invoices.index') }}" method="GET" class="d-flex">
 
-                <a href="/invoices/create" class="btn btn-success">
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ request('search') }}"
+                            class="form-control me-2"
+                            placeholder="Search Invoice">
 
-                    + Add Invoice
+                        <button class="btn btn-primary">
 
-                </a>
+                            Search
 
-                <form action="/invoices" method="GET">
+                        </button>
 
-                    <input
-                        type="text"
-                        name="search"
-                        placeholder="Search Invoice"
-                        class="form-control">
+                    </form>
 
-                </form>
+                </div>
 
             </div>
 
-            <table class="table table-bordered table-hover">
+            <div class="table-responsive">
 
-                <thead class="table-dark">
+                <table class="table table-bordered table-hover align-middle">
 
-                <tr>
+                    <thead class="table-dark">
 
-                    <th>ID</th>
+                    <tr>
 
-                    <th>Invoice No</th>
+                        <th>No.</th>
 
-                    <th>Customer</th>
+                        <th>Invoice No</th>
 
-                    <th>Date</th>
+                        <th>Customer</th>
 
-                    <th>Total</th>
+                        <th>Date</th>
 
-                    <th>Status</th>
+                        <th>Total</th>
 
-                    <th width="180">Action</th>
+                        <th>Status</th>
 
-                </tr>
+                        <th width="170">Action</th>
 
-                </thead>
+                    </tr>
 
-                <tbody>
+                    </thead>
 
-                @forelse($invoices as $invoice)
+                    <tbody>
 
-                <tr>
+                    @forelse($invoices as $invoice)
 
-                    <td>{{ $invoice->id }}</td>
+                        <tr>
 
-                    <td>{{ $invoice->invoice_number }}</td>
+                            <td>{{ $loop->iteration }}</td>
 
-                    <td>{{ $invoice->customer_name }}</td>
+                            <td>{{ $invoice->invoice_number }}</td>
 
-                    <td>{{ $invoice->invoice_date }}</td>
+                            <td>{{ $invoice->customer_name }}</td>
 
-                    <td>₹ {{ $invoice->total_amount }}</td>
+                            <td>{{ $invoice->invoice_date }}</td>
 
-                    <td>
+                            <td>₹ {{ number_format($invoice->total_amount,2) }}</td>
 
-                        @if($invoice->status=="Paid")
+                            <td>
 
-                            <span class="badge bg-success">
+                                @if($invoice->status=="Paid")
 
-                                Paid
+                                    <span class="badge bg-success">
+                                        Paid
+                                    </span>
 
-                            </span>
+                                @else
 
-                        @else
+                                    <span class="badge bg-warning text-dark">
+                                        Pending
+                                    </span>
 
-                            <span class="badge bg-warning text-dark">
+                                @endif
 
-                                Pending
+                            </td>
 
-                            </span>
+                            <td>
 
-                        @endif
+                                <a href="{{ route('invoices.edit',$invoice->id) }}"
+                                   class="btn btn-warning btn-sm">
 
-                    </td>
+                                    Edit
 
-                    <td>
+                                </a>
 
-                        <a href="/invoices/{{ $invoice->id }}/edit"
-                           class="btn btn-primary btn-sm">
+                                <form action="{{ route('invoices.destroy',$invoice->id) }}"
+                                      method="POST"
+                                      class="d-inline">
 
-                            Edit
+                                    @csrf
+                                    @method('DELETE')
 
-                        </a>
+                                    <button
+                                        type="submit"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Are you sure you want to delete this invoice?')">
 
-                        <form action="/invoices/{{ $invoice->id }}"
-                              method="POST"
-                              style="display:inline;">
+                                        Delete
 
-                            @csrf
+                                    </button>
 
-                            @method('DELETE')
+                                </form>
 
-                            <button
-                                class="btn btn-danger btn-sm"
-                                onclick="return confirm('Delete this Invoice?')">
+                            </td>
 
-                                Delete
+                        </tr>
 
-                            </button>
+                    @empty
 
-                        </form>
+                        <tr>
 
-                    </td>
+                            <td colspan="7" class="text-center text-danger">
 
-                </tr>
+                                No Invoice Found
 
-                @empty
+                            </td>
 
-                <tr>
+                        </tr>
 
-                    <td colspan="7" class="text-center">
+                    @endforelse
 
-                        No Invoice Found
+                    </tbody>
 
-                    </td>
+                </table>
 
-                </tr>
-
-                @endforelse
-
-                </tbody>
-
-            </table>
+            </div>
 
         </div>
 
     </div>
 
 </div>
+
+<footer class="text-center mt-4 mb-3 text-muted">
+
+    © 2026 Invoice Management System | Developed by Team
+
+</footer>
 
 </body>
 </html>

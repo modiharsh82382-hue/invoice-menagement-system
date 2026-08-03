@@ -8,13 +8,19 @@ use App\Models\Invoice;
 class InvoiceController extends Controller
 {
     // Invoice List
-    public function index()
+   public function index(Request $request)
     {
-        $invoices = Invoice::all();
+        $search = $request->search;
+
+        $invoices = Invoice::when($search, function ($query) use ($search) {
+
+            $query->where('invoice_number', 'like', "%{$search}%")
+                  ->orWhere('customer_name', 'like', "%{$search}%");
+
+        })->get();
 
         return view('invoices.index', compact('invoices'));
     }
-
     // Add Invoice Page
     public function create()
     {
@@ -25,23 +31,25 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'invoice_number' => 'required',
-            'customer_name' => 'required',
-            'invoice_date' => 'required',
-            'total_amount' => 'required|numeric',
-            'status' => 'required'
+        'invoice_number' => 'required|unique:invoices,invoice_number',
+        'customer_name'  => 'required',
+        'invoice_date'   => 'required|date',
+        'total_amount'   => 'required|numeric|min:1',
+        'status'         => 'required',
+    ],  [
+            'invoice_number.required' => 'Invoice Number is required.',
+            'invoice_number.unique'   => 'This Invoice Number already exists.',
         ]);
-
         Invoice::create([
             'invoice_number' => $request->invoice_number,
-            'customer_name' => $request->customer_name,
-            'invoice_date' => $request->invoice_date,
-            'total_amount' => $request->total_amount,
-            'status' => $request->status
+            'customer_name'  => $request->customer_name,
+            'invoice_date'   => $request->invoice_date,
+            'total_amount'   => $request->total_amount,
+            'status'         => $request->status,
         ]);
 
         return redirect()->route('invoices.index')
-            ->with('success', 'Invoice Added Successfully');
+            ->with('success', 'Invoice Added Successfully.');
     }
 
     // Edit Invoice
@@ -58,22 +66,25 @@ class InvoiceController extends Controller
         $invoice = Invoice::findOrFail($id);
 
         $request->validate([
-        'invoice_number' => 'required|unique:invoices,invoice_number',
-        'customer_name' => 'required',
-        'invoice_date' => 'required',
-        'total_amount' => 'required|numeric',
-        'status' => 'required'
-    ]);
+            'invoice_number' => 'required|unique:invoices,invoice_number,' . $invoice->id,
+            'customer_name'  => 'required',
+            'invoice_date'   => 'required|date',
+            'total_amount'   => 'required|numeric|min:1',
+            'status'         => 'required',
+        ],[
+            'invoice_number.unique' => 'This Invoice Number already exists.',
+        ]);
+
         $invoice->update([
             'invoice_number' => $request->invoice_number,
-            'customer_name' => $request->customer_name,
-            'invoice_date' => $request->invoice_date,
-            'total_amount' => $request->total_amount,
-            'status' => $request->status
+            'customer_name'  => $request->customer_name,
+            'invoice_date'   => $request->invoice_date,
+            'total_amount'   => $request->total_amount,
+            'status'         => $request->status,
         ]);
 
         return redirect()->route('invoices.index')
-            ->with('success', 'Invoice Updated Successfully');
+            ->with('success', 'Invoice Updated Successfully.');
     }
 
     // Delete Invoice
@@ -82,6 +93,6 @@ class InvoiceController extends Controller
         Invoice::destroy($id);
 
         return redirect()->route('invoices.index')
-            ->with('success', 'Invoice Deleted Successfully');
+            ->with('success', 'Invoice Deleted Successfully.');
     }
 }

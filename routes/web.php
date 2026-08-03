@@ -3,10 +3,26 @@
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Customer;
+use App\Models\Product;
+use App\Models\Invoice;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+    Route::get('/', function () {
+
+        return view('dashboard', [
+
+            'customers' => Customer::count(),
+
+            'products' => Product::count(),
+
+            'invoices' => Invoice::count(),
+
+        ]);
+
+        })->name('dashboard');
+            Route::get('/', function () {
+            return view('welcome');
+        }); 
 Route::get('/customers', [CustomerController::class, 'index']);
 
 Route::get('/customers/create', [CustomerController::class, 'create']);
