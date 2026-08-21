@@ -7,15 +7,21 @@ use App\Models\Customer;
 
 class CustomerController extends Controller
 {
-    // Customer List
+    // Customer List + Search
     public function index(Request $request)
     {
         $search = $request->search;
 
-        $customers = Customer::where('customer_name', 'LIKE', "%$search%")
-            ->orWhere('email', 'LIKE', "%$search%")
-            ->orWhere('phone', 'LIKE', "%$search%")
-            ->orWhere('gst_number', 'LIKE', "%$search%")
+        $customers = Customer::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('customer_name', 'LIKE', "%{$search}%")
+                      ->orWhere('email', 'LIKE', "%{$search}%")
+                      ->orWhere('phone', 'LIKE', "%{$search}%")
+                      ->orWhere('gst_number', 'LIKE', "%{$search}%");
+                });
+            })
+            ->latest()
             ->get();
 
         return view('customers.index', compact('customers'));
@@ -87,6 +93,7 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         $customer = Customer::findOrFail($id);
+
         $customer->delete();
 
         return redirect('/customers')
