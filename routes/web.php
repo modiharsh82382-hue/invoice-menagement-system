@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReportController;
@@ -8,11 +9,23 @@ use App\Http\Controllers\ReportController;
 use App\Models\Customer;
 use App\Models\Invoice;
 
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', function () {
+
     return view('dashboard', [
+
         'customers' => Customer::count(),
+
         'invoices'  => Invoice::count(),
+
     ]);
+
 })->name('dashboard');
 
 
@@ -23,7 +36,9 @@ Route::get('/', function () {
 */
 
 Route::get('/customers', [CustomerController::class, 'index']);
+
 Route::get('/customers/create', [CustomerController::class, 'create']);
+
 Route::post('/customers', [CustomerController::class, 'store']);
 
 Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])
