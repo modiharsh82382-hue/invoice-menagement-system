@@ -271,7 +271,7 @@
             <a href="/"><i class="bi bi-house-fill"></i> Home</a>
             <a href="/"><i class="bi bi-bar-chart-line-fill"></i> Dashboard</a>
             <a href="/customers"><i class="bi bi-people-fill"></i> Customers</a>
-            <a href="#"><i class="bi bi-box-seam-fill"></i> Products</a>
+            <a href="/products"><i class="bi bi-box-seam-fill"></i> Products</a>
             <a href="{{ route('invoices.index') }}" class="active"><i class="bi bi-receipt-cutoff"></i> Invoices</a>
             <a href="/reports"><i class="bi bi-pie-chart-fill"></i> Reports</a>
         </div>

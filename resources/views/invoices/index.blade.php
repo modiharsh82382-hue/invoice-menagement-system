@@ -602,7 +602,7 @@
                 <i class="bi bi-people-fill"></i>
                 Customers
             </a>
-            <a href="#">
+            <a href="/products">
                 <i class="bi bi-box-seam-fill"></i>
                 Products
             </a>
