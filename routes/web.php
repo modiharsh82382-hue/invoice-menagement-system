@@ -3,32 +3,37 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReportController;
 
 use App\Models\Customer;
-use App\Models\Invoice;
 use App\Models\Product;
-
+use App\Models\Invoice;
 
 /*
 |--------------------------------------------------------------------------
-| Dashboard
+| Dashboard Route
 |--------------------------------------------------------------------------
 */
 
 Route::get('/', function () {
 
-    return view('dashboard', [
+    $totalCustomers = Customer::count();
 
-        'customers' => Customer::count(),
+    $totalProducts = Product::count();
 
-        'invoices'  => Invoice::count(),
+    $totalInvoices = Invoice::count();
 
-        'products'  => Product::count(),
+    $totalSales = Invoice::where('status', 'Paid')
+        ->sum('total_amount');
 
-    ]);
+    return view('dashboard', compact(
+        'totalCustomers',
+        'totalProducts',
+        'totalInvoices',
+        'totalSales'
+    ));
 
 })->name('dashboard');
 
@@ -39,11 +44,14 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::get('/customers', [CustomerController::class, 'index']);
+Route::get('/customers', [CustomerController::class, 'index'])
+    ->name('customers.index');
 
-Route::get('/customers/create', [CustomerController::class, 'create']);
+Route::get('/customers/create', [CustomerController::class, 'create'])
+    ->name('customers.create');
 
-Route::post('/customers', [CustomerController::class, 'store']);
+Route::post('/customers', [CustomerController::class, 'store'])
+    ->name('customers.store');
 
 Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])
     ->name('customers.edit');
