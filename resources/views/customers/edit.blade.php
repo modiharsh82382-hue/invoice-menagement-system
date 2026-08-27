@@ -1,33 +1,52 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Customer - Invoice System')
+@section('title', 'Edit Customer - Invoice Management System')
 
 @section('content')
 
+<!-- Font & Icons -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <style>
-    .customer-hero-edit {
-        background: linear-gradient(135deg, #1e40af 0%, #172554 100%);
+    .customer-hero {
+        background: linear-gradient(135deg, #0d6efd 0%, #0a4296 100%);
         border-radius: 20px;
         padding: 35px 30px;
         color: #ffffff;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 14px 28px rgba(30, 64, 175, 0.20);
+        box-shadow: 0 14px 28px rgba(13, 110, 253, 0.18), 0 10px 10px rgba(13, 110, 253, 0.12);
         margin-bottom: 30px;
     }
-
-    .customer-hero-edit::before {
+    .customer-hero::before {
         content: "";
         position: absolute;
-        width: 240px;
-        height: 240px;
+        width: 250px;
+        height: 250px;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.07);
-        right: -50px;
-        top: -70px;
+        background: rgba(255, 255, 255, 0.08);
+        right: -60px;
+        top: -80px;
         pointer-events: none;
     }
-
+    .customer-hero::after {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        right: 80px;
+        bottom: -90px;
+        pointer-events: none;
+    }
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
     .hero-title {
         font-size: 28px;
         font-weight: 800;
@@ -35,8 +54,14 @@
         display: flex;
         align-items: center;
         gap: 12px;
+        letter-spacing: -0.5px;
     }
-
+    .hero-subtitle {
+        margin: 0;
+        font-size: 15px;
+        opacity: 0.92;
+        font-weight: 400;
+    }
     .form-container-card {
         background: #ffffff;
         border-radius: 20px;
@@ -45,16 +70,14 @@
         padding: 32px;
         margin-bottom: 40px;
     }
-
     .preview-badge-card {
         background: #f8fafc;
         border-radius: 20px;
-        border: 1px dashed #94a3b8;
+        border: 1px dashed #cbd5e1;
         padding: 26px;
         position: sticky;
         top: 20px;
     }
-
     .section-divider-title {
         font-size: 18px;
         font-weight: 700;
@@ -66,7 +89,12 @@
         align-items: center;
         gap: 10px;
     }
-
+    .section-divider-title i {
+        color: #0d6efd;
+    }
+    .form-group-wrapper {
+        margin-bottom: 22px;
+    }
     .custom-label {
         font-size: 14px;
         font-weight: 600;
@@ -74,17 +102,15 @@
         margin-bottom: 8px;
         display: block;
     }
-
     .custom-label .req-star {
         color: #ef4444;
+        margin-left: 2px;
     }
-
     .custom-input-group {
         display: flex;
         width: 100%;
-        margin-bottom: 22px;
+        position: relative;
     }
-
     .custom-input-icon {
         width: 48px;
         min-width: 48px;
@@ -96,10 +122,10 @@
         border: 1px solid #cbd5e1;
         border-right: none;
         border-radius: 10px 0 0 10px;
-        color: #2563eb;
+        color: #0d6efd;
         font-size: 16px;
+        transition: all 0.2s ease-in-out;
     }
-
     .custom-input-field {
         width: 100%;
         height: 48px;
@@ -109,10 +135,10 @@
         font-size: 14px;
         font-weight: 500;
         color: #0f172a;
+        background-color: #ffffff;
         outline: none;
-        transition: all 0.2s;
+        transition: all 0.2s ease-in-out;
     }
-
     .custom-textarea-field {
         width: 100%;
         min-height: 110px;
@@ -124,22 +150,36 @@
         color: #0f172a;
         outline: none;
         resize: vertical;
+        transition: all 0.2s ease-in-out;
     }
-
     .custom-input-field:focus,
     .custom-textarea-field:focus {
-        border-color: #2563eb;
-        box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.12);
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 3.5px rgba(13, 110, 253, 0.12);
     }
-
+    .custom-input-field:focus + .custom-input-icon,
+    .custom-input-group:focus-within .custom-input-icon {
+        background-color: #e0edff;
+        border-color: #0d6efd;
+        color: #0a58ca;
+    }
+    .field-hint-text {
+        font-size: 12px;
+        color: #64748b;
+        margin-top: 6px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
     .field-error-msg {
         font-size: 12px;
         color: #dc2626;
-        margin-top: -16px;
-        margin-bottom: 16px;
+        margin-top: 6px;
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
     }
-
     .form-footer-actions {
         margin-top: 30px;
         padding-top: 24px;
@@ -150,9 +190,8 @@
         flex-wrap: wrap;
         gap: 15px;
     }
-
     .btn-action-primary {
-        background: #2563eb;
+        background: #0d6efd;
         color: #ffffff;
         border: none;
         padding: 12px 28px;
@@ -164,12 +203,14 @@
         gap: 8px;
         cursor: pointer;
         transition: all 0.2s;
+        box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
     }
-
     .btn-action-primary:hover {
-        background: #1d4ed8;
+        background: #0b5ed7;
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(13, 110, 253, 0.35);
     }
-
     .btn-action-secondary {
         background: #f1f5f9;
         color: #475569;
@@ -182,8 +223,36 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
+        transition: all 0.2s;
     }
-
+    .btn-action-secondary:hover {
+        background: #e2e8f0;
+        color: #1e293b;
+    }
+    .preview-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #dbeafe;
+        color: #0d6efd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+    .preview-info-row {
+        margin-bottom: 10px;
+        font-size: 13px;
+        color: #475569;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .preview-info-row i {
+        width: 18px;
+        color: #94a3b8;
+    }
     .badge-gst {
         background-color: #e0f2fe;
         color: #0369a1;
@@ -195,140 +264,251 @@
     }
 </style>
 
-<div class="customer-hero-edit">
+<!-- HERO HEADER -->
+<div class="customer-hero">
     <div class="hero-content">
         <div class="hero-title">
             <i class="fa-solid fa-user-pen"></i>
             <span>Edit Customer Profile</span>
         </div>
-        <p class="mb-0 text-white-50">
-            Updating registered identity for: <strong>{{ $customer->customer_name }}</strong> (ID: #{{ $customer->id }})
+        <p class="hero-subtitle">
+            Update customer directory records, verified GSTIN specifications, and billing contact parameters.
         </p>
     </div>
 </div>
 
 <div class="row">
+    <!-- FORM COLUMN -->
     <div class="col-lg-8">
         <div class="form-container-card">
-            <div class="section-divider-title">
-                <i class="fa-solid fa-pen-to-square text-primary"></i>
-                <span>Update Customer Details</span>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="section-divider-title m-0 p-0 border-0">
+                    <i class="fa-solid fa-address-card"></i>
+                    <span>Edit Details Form</span>
+                </div>
+                <span class="badge bg-primary px-3 py-2 rounded-pill">Customer ID #{{ $customer->id }}</span>
             </div>
 
-            <form action="{{ route('customers.update', $customer->id) }}" method="POST">
+            <form action="{{ url('/customers/'.$customer->id) }}" method="POST" id="customerEditForm">
                 @csrf
                 @method('PUT')
 
-                <!-- NAME -->
-                <label class="custom-label">Customer Name <span class="req-star">*</span></label>
-                <div class="custom-input-group">
-                    <div class="custom-input-icon">
-                        <i class="fa-solid fa-user"></i>
+                <!-- CUSTOMER NAME -->
+                <div class="form-group-wrapper">
+                    <label class="custom-label">
+                        Customer Full Name <span class="req-star">*</span>
+                    </label>
+                    <div class="custom-input-group">
+                        <div class="custom-input-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <input
+                            type="text"
+                            name="customer_name"
+                            id="input_customer_name"
+                            class="custom-input-field"
+                            placeholder="e.g. Acme Corporation or Ramesh Patel"
+                            value="{{ old('customer_name', $customer->customer_name) }}"
+                            oninput="updatePreview()"
+                            required>
                     </div>
-                    <input type="text" name="customer_name" id="input_customer_name" class="custom-input-field" 
-                           value="{{ old('customer_name', $customer->customer_name) }}" oninput="updatePreview()" required>
+                    @error('customer_name')
+                        <div class="field-error-msg">
+                            <i class="fa-solid fa-circle-exclamation"></i> {{ $message }}
+                        </div>
+                    @enderror
                 </div>
-                @error('customer_name')
-                    <div class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                @enderror
 
                 <!-- EMAIL + PHONE -->
                 <div class="row">
                     <div class="col-md-6">
-                        <label class="custom-label">Email Address <span class="req-star">*</span></label>
-                        <div class="custom-input-group">
-                            <div class="custom-input-icon"><i class="fa-solid fa-envelope"></i></div>
-                            <input type="email" name="email" id="input_email" class="custom-input-field" 
-                                   value="{{ old('email', $customer->email) }}" oninput="updatePreview()" required>
+                        <div class="form-group-wrapper">
+                            <label class="custom-label">
+                                Official Email Address <span class="req-star">*</span>
+                            </label>
+                            <div class="custom-input-group">
+                                <div class="custom-input-icon">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    id="input_email"
+                                    class="custom-input-field"
+                                    placeholder="client@domain.com"
+                                    value="{{ old('email', $customer->email) }}"
+                                    oninput="updatePreview()"
+                                    required>
+                            </div>
+                            @error('email')
+                                <div class="field-error-msg">
+                                    <i class="fa-solid fa-circle-exclamation"></i> {{ $message }}
+                                </div>
+                            @enderror
                         </div>
-                        @error('email')
-                            <div class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
                     </div>
 
                     <div class="col-md-6">
-                        <label class="custom-label">Mobile Number <span class="req-star">*</span></label>
-                        <div class="custom-input-group">
-                            <div class="custom-input-icon"><i class="fa-solid fa-phone"></i></div>
-                            <input type="tel" name="phone" id="input_phone" class="custom-input-field" maxlength="10" 
-                                   value="{{ old('phone', $customer->phone) }}" 
-                                   oninput="this.value = this.value.replace(/[^0-9]/g, ''); updatePreview();" required>
+                        <div class="form-group-wrapper">
+                            <label class="custom-label">
+                                Mobile Number (10 Digits) <span class="req-star">*</span>
+                            </label>
+                            <div class="custom-input-group">
+                                <div class="custom-input-icon">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    id="input_phone"
+                                    class="custom-input-field"
+                                    placeholder="10 digit mobile"
+                                    maxlength="10"
+                                    value="{{ old('phone', $customer->phone) }}"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, ''); updatePreview();"
+                                    required>
+                            </div>
+                            <div class="field-hint-text">
+                                <i class="fa-solid fa-circle-info"></i> Numerical values only without country code.
+                            </div>
+                            @error('phone')
+                                <div class="field-error-msg">
+                                    <i class="fa-solid fa-circle-exclamation"></i> {{ $message }}
+                                </div>
+                            @enderror
                         </div>
-                        @error('phone')
-                            <div class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
                     </div>
                 </div>
 
                 <!-- ADDRESS -->
-                <label class="custom-label">Billing Address <span class="req-star">*</span></label>
-                <div class="custom-input-group">
-                    <div class="custom-input-icon" style="height: auto; align-items: flex-start; padding-top: 14px;">
-                        <i class="fa-solid fa-location-dot"></i>
+                <div class="form-group-wrapper">
+                    <label class="custom-label">
+                        Billing & Registered Address <span class="req-star">*</span>
+                    </label>
+                    <div class="custom-input-group">
+                        <div class="custom-input-icon" style="height: auto; align-items: flex-start; padding-top: 14px;">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <textarea
+                            name="address"
+                            id="input_address"
+                            class="custom-textarea-field"
+                            placeholder="Street address, city, state and PIN code"
+                            oninput="updatePreview()"
+                            required>{{ old('address', $customer->address) }}</textarea>
                     </div>
-                    <textarea name="address" id="input_address" class="custom-textarea-field" oninput="updatePreview()" required>{{ old('address', $customer->address) }}</textarea>
+                    @error('address')
+                        <div class="field-error-msg">
+                            <i class="fa-solid fa-circle-exclamation"></i> {{ $message }}
+                        </div>
+                    @enderror
                 </div>
-                @error('address')
-                    <div class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                @enderror
 
                 <!-- GST NUMBER -->
-                <label class="custom-label">GST Number <span class="req-star">*</span></label>
-                <div class="custom-input-group">
-                    <div class="custom-input-icon"><i class="fa-solid fa-building-columns"></i></div>
-                    <input type="text" name="gst_number" id="input_gst" class="custom-input-field" maxlength="15" 
-                           value="{{ old('gst_number', $customer->gst_number) }}" style="text-transform: uppercase;" 
-                           oninput="this.value = this.value.toUpperCase(); updatePreview();" required>
+                <div class="form-group-wrapper">
+                    <label class="custom-label">
+                        GST Identification Number (GSTIN) <span class="req-star">*</span>
+                    </label>
+                    <div class="custom-input-group">
+                        <div class="custom-input-icon">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+                        <input
+                            type="text"
+                            name="gst_number"
+                            id="input_gst"
+                            class="custom-input-field"
+                            placeholder="24ABCDE1234F1Z5"
+                            maxlength="15"
+                            value="{{ old('gst_number', $customer->gst_number) }}"
+                            style="text-transform: uppercase; font-family: monospace; letter-spacing: 1px;"
+                            oninput="this.value = this.value.toUpperCase(); updatePreview();"
+                            required>
+                    </div>
+                    <div class="field-hint-text">
+                        <i class="fa-solid fa-shield-halved"></i> Must follow standard 15-character statutory GST format.
+                    </div>
+                    @error('gst_number')
+                        <div class="field-error-msg">
+                            <i class="fa-solid fa-circle-exclamation"></i> {{ $message }}
+                        </div>
+                    @enderror
                 </div>
-                @error('gst_number')
-                    <div class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                @enderror
 
                 <!-- ACTIONS -->
                 <div class="form-footer-actions">
                     <a href="/customers" class="btn-action-secondary">
                         <i class="fa-solid fa-arrow-left"></i>
-                        <span>Cancel</span>
+                        <span>Cancel & Return</span>
                     </a>
-                    <button type="submit" class="btn-action-primary">
-                        <i class="fa-solid fa-check"></i>
-                        <span>Update Customer</span>
-                    </button>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn-action-primary">
+                            <i class="fa-solid fa-check-double"></i>
+                            <span>Update Customer</span>
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- PREVIEW SIDEBAR -->
+    <!-- LIVE VIEW & PREVIEW COLUMN -->
     <div class="col-lg-4">
         <div class="preview-badge-card shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="badge bg-primary text-uppercase px-2 py-1" style="font-size: 10px;">Live Update Tracker</span>
-                <span class="text-muted" style="font-size: 11px;">#ID: {{ $customer->id }}</span>
+                <span class="badge bg-primary text-uppercase px-2 py-1" style="font-size: 10px;">Live View Card</span>
+                <span class="text-muted" style="font-size: 11px;"><i class="fa-solid fa-bolt text-warning"></i> Real-time</span>
+            </div>
+
+            <div class="preview-avatar" id="badge_avatar">
+                <i class="fa-solid fa-building-user"></i>
             </div>
 
             <h5 class="fw-bold mb-1 text-dark" id="badge_name">{{ $customer->customer_name }}</h5>
             <div class="mb-3">
-                <span class="badge-gst" id="badge_gst">GSTIN: {{ $customer->gst_number }}</span>
+                <span class="badge-gst" id="badge_gst">{{ $customer->gst_number ? 'GSTIN: '.$customer->gst_number : 'GST: NOT PROVIDED' }}</span>
             </div>
 
             <hr class="my-3 text-muted">
 
-            <div class="mb-2 text-secondary small"><i class="fa-solid fa-envelope me-2 text-primary"></i><span id="badge_email">{{ $customer->email }}</span></div>
-            <div class="mb-2 text-secondary small"><i class="fa-solid fa-phone me-2 text-primary"></i><span id="badge_phone">+91 {{ $customer->phone }}</span></div>
-            <div class="mb-2 text-secondary small"><i class="fa-solid fa-location-dot me-2 text-primary"></i><span id="badge_address">{{ $customer->address }}</span></div>
+            <div class="preview-info-row">
+                <i class="fa-solid fa-envelope"></i>
+                <span id="badge_email">{{ $customer->email ?? 'no-email@customer.com' }}</span>
+            </div>
+
+            <div class="preview-info-row">
+                <i class="fa-solid fa-phone"></i>
+                <span id="badge_phone">{{ $customer->phone ? '+91 '.$customer->phone : '+91 00000 00000' }}</span>
+            </div>
+
+            <div class="preview-info-row">
+                <i class="fa-solid fa-location-dot"></i>
+                <span id="badge_address">{{ $customer->address ?? 'Billing address will render here...' }}</span>
+            </div>
         </div>
     </div>
 </div>
 
+<!-- CLIENT JAVASCRIPT HELPERS -->
 <script>
     function updatePreview() {
-        document.getElementById('badge_name').innerText = document.getElementById('input_customer_name').value || 'Customer Name';
-        document.getElementById('badge_email').innerText = document.getElementById('input_email').value || 'email@example.com';
-        document.getElementById('badge_phone').innerText = '+91 ' + (document.getElementById('input_phone').value || '0000000000');
-        document.getElementById('badge_address').innerText = document.getElementById('input_address').value || 'Address...';
-        document.getElementById('badge_gst').innerText = 'GSTIN: ' + (document.getElementById('input_gst').value || '---');
+        const nameVal = document.getElementById('input_customer_name').value.trim();
+        const emailVal = document.getElementById('input_email').value.trim();
+        const phoneVal = document.getElementById('input_phone').value.trim();
+        const addressVal = document.getElementById('input_address').value.trim();
+        const gstVal = document.getElementById('input_gst').value.trim();
+
+        document.getElementById('badge_name').innerText = nameVal || 'Customer Name';
+        document.getElementById('badge_email').innerText = emailVal || 'no-email@customer.com';
+        document.getElementById('badge_phone').innerText = phoneVal ? '+91 ' + phoneVal : '+91 00000 00000';
+        document.getElementById('badge_address').innerText = addressVal || 'Billing address will render here...';
+        document.getElementById('badge_gst').innerText = gstVal ? 'GSTIN: ' + gstVal : 'GST: NOT PROVIDED';
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        updatePreview();
+    });
 </script>
 
 @endsection
