@@ -345,9 +345,9 @@
         <!-- DASHBOARD -->
 
         <a
-            href="/dashboard"
+            href="{{ route('dashboard') }}"
             class="ims-nav-link
-            {{ request()->is('dashboard*') ? 'active' : '' }}">
+            {{ request()->routeIs('dashboard') ? 'active' : '' }}">
 
             <i class="fa-solid fa-chart-line"></i>
 
