@@ -41,8 +41,15 @@ Route::get('/', function () {
         ->sum('total_amount');
 
     // 4. Previous Month Sales
-    $previousMonthStart = now()->subMonth()->startOfMonth()->toDateString();
-    $previousMonthEnd   = now()->subMonth()->endOfMonth()->toDateString();
+    $currentMonth = now()->startOfMonth();
+
+    $currentMonthStart = $currentMonth->toDateString();
+    $currentMonthEnd   = $currentMonth->copy()->endOfMonth()->toDateString();
+
+    $previousMonth = $currentMonth->copy()->subMonth();
+
+    $previousMonthStart = $previousMonth->toDateString();
+    $previousMonthEnd   = $previousMonth->copy()->endOfMonth()->toDateString();
 
     $lastMonthSales = Invoice::where('status', 'Paid')
         ->whereBetween('invoice_date', [$previousMonthStart, $previousMonthEnd])

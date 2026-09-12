@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 
     <style>
         * { box-sizing: border-box; }
@@ -242,6 +242,26 @@
             font-weight: 600;
         }
         .footer { text-align: center; color: #8a94a6; font-size: 11px; padding: 25px 0 10px; }
+        @media (max-width: 991px) {
+            .nav-menu {
+                width: 100%;
+                margin-top: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .navbar-brand {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .nav-menu a {
+                font-size: 11px;
+                padding: 7px 9px;
+            }
+        }
     </style>
 </head>
 
