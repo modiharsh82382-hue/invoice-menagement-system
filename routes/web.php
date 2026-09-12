@@ -97,12 +97,12 @@ Route::get('/', function () {
     $monthlyData = Invoice::where('status', 'Paid')
         ->where('invoice_date', '>=', $sixMonthsAgo->toDateString())
         ->selectRaw("
-            DATE_FORMAT(invoice_date, '%Y-%m') as year_month,
+            DATE_FORMAT(invoice_date, '%Y-%m') as month_key,
             SUM(total_amount) as revenue
         ")
-        ->groupBy('year_month')
-        ->orderBy('year_month')
-        ->pluck('revenue', 'year_month');
+        ->groupByRaw("DATE_FORMAT(invoice_date, '%Y-%m')")
+        ->orderByRaw("DATE_FORMAT(invoice_date, '%Y-%m') ASC")
+        ->pluck('revenue', 'month_key');
 
 
         // 9. Prepare Chart Data
