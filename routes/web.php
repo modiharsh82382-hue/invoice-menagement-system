@@ -33,35 +33,44 @@ Route::get('/', function () {
     ")->first();
 
     // 3. Current Month Sales
-    $currentMonthStart = now()->startOfMonth()->toDateString();
-    $currentMonthEnd   = now()->endOfMonth()->toDateString();
+    $currentMonth = now()->startOfMonth();
+    $currentMonthEnd = $currentMonth->copy()->endOfMonth();
 
     $currentMonthSales = Invoice::where('status', 'Paid')
-        ->whereBetween('invoice_date', [$currentMonthStart, $currentMonthEnd])
+        ->whereBetween('invoice_date', [
+            $currentMonth->toDateString(),
+            $currentMonthEnd->toDateString()
+        ])
         ->sum('total_amount');
+
 
     // 4. Previous Month Sales
-    $currentMonth = now()->startOfMonth();
-
-    $currentMonthStart = $currentMonth->toDateString();
-    $currentMonthEnd   = $currentMonth->copy()->endOfMonth()->toDateString();
-
     $previousMonth = $currentMonth->copy()->subMonth();
-
-    $previousMonthStart = $previousMonth->toDateString();
-    $previousMonthEnd   = $previousMonth->copy()->endOfMonth()->toDateString();
+    $previousMonthEnd = $previousMonth->copy()->endOfMonth();
 
     $lastMonthSales = Invoice::where('status', 'Paid')
-        ->whereBetween('invoice_date', [$previousMonthStart, $previousMonthEnd])
+        ->whereBetween('invoice_date', [
+            $previousMonth->toDateString(),
+            $previousMonthEnd->toDateString()
+        ])
         ->sum('total_amount');
+
 
     // 5. Revenue Growth Percentage
     $revenueGrowth = 0;
+
     if ($lastMonthSales > 0) {
-        $revenueGrowth = round((($currentMonthSales - $lastMonthSales) / $lastMonthSales) * 100, 1);
+        $revenueGrowth = round(
+        (
+            ($currentMonthSales - $lastMonthSales)
+            / $lastMonthSales
+        ) * 100,
+            1
+        );
     } elseif ($currentMonthSales > 0) {
         $revenueGrowth = 100;
     }
+
 
     // 6. Recent Invoices
     $recentInvoices = Invoice::orderByDesc('invoice_date')
@@ -69,27 +78,48 @@ Route::get('/', function () {
         ->take(5)
         ->get();
 
+
     // 7. Top 5 Customers
     $topCustomers = Invoice::where('status', 'Paid')
-        ->select('customer_name', DB::raw('SUM(total_amount) as total_amount'))
+        ->select(
+        'customer_name',
+        DB::raw('SUM(total_amount) as total_amount')
+        )
         ->groupBy('customer_name')
         ->orderByDesc('total_amount')
         ->take(5)
         ->get();
 
-    // 8. Last 6 Months Revenue (MariaDB / SQL syntax error વગર Collection દ્વારા)
-    $sixMonthsAgo = now()->subMonths(5)->startOfMonth()->toDateString();
 
-    $invoices = Invoice::where('status', 'Paid')
-        ->where('invoice_date', '>=', $sixMonthsAgo)
-        ->select('invoice_date', 'total_amount')
-        ->get();
+    // 8. Last 6 Months Revenue
+    $sixMonthsAgo = now()->startOfMonth()->subMonths(5);
 
-    $monthlyData = $invoices->groupBy(function ($item) {
-        return \Carbon\Carbon::parse($item->invoice_date)->format('Y-m');
-    })->map(function ($row) {
-        return $row->sum('total_amount');
-    });
+    $monthlyData = Invoice::where('status', 'Paid')
+        ->where('invoice_date', '>=', $sixMonthsAgo->toDateString())
+        ->selectRaw("
+            DATE_FORMAT(invoice_date, '%Y-%m') as year_month,
+            SUM(total_amount) as revenue
+        ")
+        ->groupBy('year_month')
+        ->orderBy('year_month')
+        ->pluck('revenue', 'year_month');
+
+
+        // 9. Prepare Chart Data
+    $monthlyLabels = [];
+    $monthlyRevenue = [];
+
+    for ($i = 5; $i >= 0; $i--) {
+
+        $month = now()->startOfMonth()->subMonths($i);
+        $monthKey = $month->format('Y-m');
+
+        $monthlyLabels[] = $month->format('M');
+
+        $monthlyRevenue[] = (float) (
+            $monthlyData->get($monthKey, 0)
+        );
+    }
 
     $monthlyLabels  = [];
     $monthlyRevenue = [];
