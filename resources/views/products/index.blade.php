@@ -91,6 +91,7 @@
             <a href="{{ route('products.index') }}" class="active"><i class="bi bi-box-seam-fill me-1"></i>Products</a>
             <a href="/invoices"><i class="bi bi-receipt me-1"></i>Invoices</a>
             <a href="/reports"><i class="bi bi-pie-chart-fill me-1"></i>Reports</a>
+            @include('partials.logout-button')
         </div>
     </div>
 </nav>
