@@ -1,28 +1,27 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReportController;
-
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Invoice;
 
-/*
-|--------------------------------------------------------------------------
-| Dashboard Route
-|--------------------------------------------------------------------------
-*/
+// Home Page
+Route::view('/', 'home')->name('home');
 
-Route::get('/', function () {
+// Login
+Route::get('/login', function () {
+    return view('login');
+});
 
+// Dashboard
+Route::get('/dashboard', function () {
     $totalCustomers = Customer::count();
-
     $totalProducts = Product::count();
-
     $totalInvoices = Invoice::count();
 
     $totalSales = Invoice::where('status', 'Paid')
@@ -34,16 +33,9 @@ Route::get('/', function () {
         'totalInvoices',
         'totalSales'
     ));
-
 })->name('dashboard');
 
-
-/*
-|--------------------------------------------------------------------------
-| Customer Routes
-|--------------------------------------------------------------------------
-*/
-
+// Customer Routes
 Route::get('/customers', [CustomerController::class, 'index'])
     ->name('customers.index');
 
@@ -62,13 +54,7 @@ Route::put('/customers/{id}', [CustomerController::class, 'update'])
 Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])
     ->name('customers.destroy');
 
-
-/*
-|--------------------------------------------------------------------------
-| Product Routes
-|--------------------------------------------------------------------------
-*/
-
+// Product Routes
 Route::get('/products', [ProductController::class, 'index'])
     ->name('products.index');
 
@@ -87,12 +73,10 @@ Route::put('/products/{id}', [ProductController::class, 'update'])
 Route::delete('/products/{id}', [ProductController::class, 'destroy'])
     ->name('products.destroy');
 
-
-/*
-|--------------------------------------------------------------------------
-| Invoice Routes
-|--------------------------------------------------------------------------
-*/
+// Invoice Routes
+Route::get('/invoice', function () {
+    return view('invoice');
+});
 
 Route::get('/invoices', [InvoiceController::class, 'index'])
     ->name('invoices.index');
@@ -112,13 +96,10 @@ Route::put('/invoices/{id}', [InvoiceController::class, 'update'])
 Route::delete('/invoices/{id}', [InvoiceController::class, 'destroy'])
     ->name('invoices.destroy');
 
+Route::get('/invoices/{id}/print', [InvoiceController::class, 'print']);
+Route::get('/invoices/{id}/pdf', [InvoiceController::class, 'downloadPdf']);
 
-/*
-|--------------------------------------------------------------------------
-| Reports Routes
-|--------------------------------------------------------------------------
-*/
-
+// Reports Routes
 Route::get('/reports', [ReportController::class, 'index'])
     ->name('reports.index');
 
