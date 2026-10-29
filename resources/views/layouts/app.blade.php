@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <title>
         @yield('title', 'Invoice Management System')
@@ -212,11 +213,11 @@
 
             width: 100%;
 
-            max-width: 1150px;
+            max-width: 1320px;
 
-            margin: auto;
+            margin: 0 auto;
 
-            padding: 35px 20px 60px;
+            padding: 32px 12px 60px;
         }
 
 
@@ -305,115 +306,7 @@
      NAVBAR
 ===================================================== -->
 
-<nav class="main-navbar">
-
-
-    <!-- BRAND -->
-
-    <a href="/" class="ims-brand">
-
-        <span class="ims-brand-icon">
-            <i class="fa-solid fa-file-invoice"></i>
-        </span>
-
-        <span>
-            Invoice Management System
-        </span>
-
-    </a>
-
-
-    <!-- MENU -->
-
-    <div class="ims-nav-menu">
-
-
-        <!-- HOME -->
-
-        <a
-            href="/"
-            class="ims-nav-link
-            {{ request()->is('/') ? 'active' : '' }}">
-
-            <i class="fa-solid fa-house"></i>
-
-            <span>Home</span>
-
-        </a>
-
-
-        <!-- DASHBOARD -->
-
-        <a
-            href="{{ route('dashboard') }}"
-            class="ims-nav-link
-            {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-
-            <i class="fa-solid fa-chart-line"></i>
-
-            <span>Dashboard</span>
-
-        </a>
-
-
-        <!-- CUSTOMERS -->
-
-        <a
-            href="/customers"
-            class="ims-nav-link
-            {{ request()->is('customers*') ? 'active' : '' }}">
-
-            <i class="fa-solid fa-users"></i>
-
-            <span>Customers</span>
-
-        </a>
-
-
-        <!-- PRODUCTS -->
-
-        <a
-            href="/products"
-            class="ims-nav-link
-            {{ request()->is('products*') ? 'active' : '' }}">
-
-            <i class="fa-solid fa-box"></i>
-
-            <span>Products</span>
-
-        </a>
-
-
-        <!-- INVOICES -->
-
-        <a
-            href="/invoices"
-            class="ims-nav-link
-            {{ request()->is('invoices*') ? 'active' : '' }}">
-
-            <i class="fa-solid fa-file-invoice-dollar"></i>
-
-            <span>Invoices</span>
-
-        </a>
-
-
-        <!-- REPORTS -->
-
-        <a
-            href="/reports"
-            class="ims-nav-link
-            {{ request()->is('reports*') ? 'active' : '' }}">
-
-            <i class="fa-solid fa-chart-pie"></i>
-
-            <span>Reports</span>
-
-        </a>
-
-    </div>
-
-</nav>
+@include('partials.app-navbar')
 
 
 <!-- =====================================================

@@ -7,10 +7,21 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\Auth\SessionController;
 
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Invoice;
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [SessionController::class, 'create'])->name('login');
+    Route::post('/login', [SessionController::class, 'store'])
+        ->middleware('throttle:5,1')
+        ->name('login.store');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [SessionController::class, 'destroy'])->name('logout');
 
 /*
 |--------------------------------------------------------------------------
@@ -164,3 +175,4 @@ Route::resource('invoices', InvoiceController::class)->except(['show']);
 Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 Route::get('/reports/pdf', [ReportController::class, 'exportPdf'])->name('reports.pdf');
 Route::get('/reports/excel', [ReportController::class, 'exportExcel'])->name('reports.excel');
+});

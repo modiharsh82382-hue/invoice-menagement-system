@@ -54,13 +54,16 @@ The project follows a modular development approach where each team member is res
 **Developed by:** Patel Jainil
 
 ### 📦 Product Management
-- Product-related module
-- Product data management
-- Product integration
+- Add, edit, search, and delete products
+- Track SKU, category, price, and stock quantity
 
 **Developed by:** Patel Happy
 
-> Product module integration is being handled separately and will be connected with the main project when the module is ready.
+### 🔐 Account Access
+- Sign in and sign out
+- Invoice, customer, product, dashboard, and report pages require authentication
+- The sign-in page offers a one-time first-account setup; after an account exists, registration is disabled
+- Settings allow the signed-in user to update their name, email, and password
 
 ---
 
@@ -122,3 +125,27 @@ invoice-management-system/
 ├── artisan
 ├── composer.json
 └── README.md
+```
+
+## Run Locally
+
+Requirements: PHP 8.2+, Composer, Node.js, pnpm 11+, and MySQL.
+
+1. Install PHP dependencies with composer install.
+2. Copy .env.example to .env, create the invoice_management_system database, then set the database username and password in .env.
+3. Generate the application key with php artisan key:generate.
+4. Install the frontend dependencies with pnpm install, then build assets with pnpm run build.
+5. Create the database tables with php artisan migrate.
+6. Start Laravel with php artisan serve and open the local URL printed in the terminal. If no real user exists yet, select Create the first account on the sign-in page.
+
+The first-account form accepts the user's name, email, and password. It replaces the old test@example.com sample user if that row exists, and later public registrations are blocked.
+
+## Production Publishing
+
+- Point the web server document root to the project's public/ directory.
+- Use a production .env with APP_ENV=production, APP_DEBUG=false, the public APP_URL, and production database credentials. Keep .env private and enable HTTPS.
+- Build assets with pnpm install --frozen-lockfile and pnpm run build.
+- Back up the database, then run php artisan migrate --force.
+- Set correct write permissions for storage/ and bootstrap/cache/.
+- Complete the first-account setup before exposing the application publicly. Later public registrations are blocked.
+- Verify sign-in, each CRUD module, PDF output, and the Excel-compatible CSV export, and schedule regular database and file backups.
