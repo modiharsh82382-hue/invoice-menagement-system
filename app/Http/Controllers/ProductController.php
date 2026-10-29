@@ -23,7 +23,7 @@ class ProductController extends Controller
             ->latest('id')
             ->get();
 
-        return view('products.index', compact('products'));
+        return view('products.index-shared', compact('products'));
     }
 
     // Add Product Form

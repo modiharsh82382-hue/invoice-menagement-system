@@ -43,6 +43,7 @@
             <a href="/products" class="btn btn-light btn-sm">Products</a>
 
             <a href="{{ route('invoices.index') }}" class="btn btn-light btn-sm">Invoices</a>
+            @include('partials.logout-button')
 
         </div>
 
@@ -149,7 +150,7 @@
                     </a>
 
                     <a href="{{ route('reports.excel', request()->query()) }}" class="btn btn-success btn-sm">
-                        Export Excel
+                        Export for Excel (CSV)
                     </a>
 
                     <button onclick="window.print()" class="btn btn-secondary btn-sm">

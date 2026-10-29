@@ -267,20 +267,7 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg main-navbar">
-    <div class="container">
-        <a class="navbar-brand" href="{{ route('dashboard') }}">
-            <i class="bi bi-receipt-cutoff me-2"></i>Invoice Management System
-        </a>
-        <div class="nav-menu ms-auto">
-            <a href="{{ route('dashboard') }}" class="active"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
-            <a href="{{ route('customers.index') }}"><i class="bi bi-people-fill me-1"></i> Customers</a>
-            <a href="{{ route('products.index') }}"><i class="bi bi-box-seam-fill me-1"></i> Products</a>
-            <a href="{{ route('invoices.index') }}"><i class="bi bi-receipt me-1"></i> Invoices</a>
-            <a href="{{ route('reports.index') }}"><i class="bi bi-pie-chart-fill me-1"></i> Reports</a>
-        </div>
-    </div>
-</nav>
+@include('partials.app-navbar')
 
 <div class="container page-wrapper">
 
