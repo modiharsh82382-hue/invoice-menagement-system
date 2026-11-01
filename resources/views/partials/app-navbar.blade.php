@@ -210,7 +210,7 @@
         <button type="button" class="ims-menu-trigger" aria-label="Open application menu" aria-controls="ims-app-drawer" aria-expanded="false">
             <span aria-hidden="true">⋮</span>
         </button>
-        <a class="ims-topbar-brand" href="{{ auth()->check() ? route('dashboard') : route('login') }}">Invoice Management System</a>
+        <a class="ims-topbar-brand" href="{{ auth()->check() ? route('home') : route('login') }}">Invoice Management System</a>
         @auth
             <span class="ims-topbar-user">{{ auth()->user()->name }}</span>
         @endauth
@@ -253,7 +253,6 @@
         @else
             <div class="ims-drawer-section-label">Account</div>
             <nav class="ims-drawer-nav" aria-label="Sign-in links">
-                <a class="ims-drawer-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}"><span class="ims-drawer-icon" aria-hidden="true">⌂</span>Home</a>
                 <a class="ims-drawer-link {{ request()->routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}"><span class="ims-drawer-icon" aria-hidden="true">↪</span>Sign in</a>
                 @if (request()->routeIs('register') || ($canRegister ?? false))
                     <a class="ims-drawer-link {{ request()->routeIs('register') ? 'active' : '' }}" href="{{ route('register') }}"><span class="ims-drawer-icon" aria-hidden="true">＋</span>Create account</a>

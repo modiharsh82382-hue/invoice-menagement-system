@@ -470,12 +470,12 @@
                     </p>
 
                     <div class="hero-buttons">
-                        <a href="{{ route('login') }}" class="btn btn-primary">
-                            Get Started <span>→</span>
+                        <a href="{{ route('dashboard') }}" class="btn btn-primary">
+                            Go to Dashboard <span>→</span>
                         </a>
 
-                        <a href="#features" class="btn btn-outline">
-                            Explore Features
+                        <a href="{{ route('invoices.index') }}" class="btn btn-outline">
+                            Manage Invoices
                         </a>
                     </div>
 
@@ -510,7 +510,7 @@
                             <div class="invoice-name">Invoice Records</div>
                             <div class="invoice-sub">Create and manage invoices</div>
                         </div>
-                        <span class="paid">Available</span>
+                        <a href="{{ route('invoices.index') }}" class="paid" style="text-decoration: none;">Open</a>
                     </div>
 
                     <div class="invoice-row">
@@ -518,7 +518,7 @@
                             <div class="invoice-name">Customer Details</div>
                             <div class="invoice-sub">Organized customer information</div>
                         </div>
-                        <span class="paid">Available</span>
+                        <a href="{{ route('customers.index') }}" class="paid" style="text-decoration: none;">Open</a>
                     </div>
 
                     <div class="invoice-row">
@@ -526,7 +526,7 @@
                             <div class="invoice-name">Products & Reports</div>
                             <div class="invoice-sub">Manage records and review reports</div>
                         </div>
-                        <span class="paid">Available</span>
+                        <a href="{{ route('products.index') }}" class="paid" style="text-decoration: none;">Open</a>
                     </div>
                 </div>
 
@@ -610,8 +610,8 @@
                         Access your Invoice Management System and
                         manage your records in one convenient place.
                     </p>
-                    <a href="{{ route('login') }}" class="btn">
-                        Go to Login <span>→</span>
+                    <a href="{{ route('dashboard') }}" class="btn">
+                        Go to Dashboard <span>→</span>
                     </a>
                 </div>
             </div>
